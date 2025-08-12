@@ -1,0 +1,12 @@
+You have been asked to speed up core parts of three different applications. Your job is to measure performance, find bottlenecks, and suggest optimizations using timing functions and GPROF.  
+
+Task:
+You have a dataset of simulated daily temperatures for 50 years (≈ 18,250 values).
+Implement two versions to sort this dataset:  Bubble Sort (for baseline) and Quicksort (efficient approach)
+Measure:  Execution time for each algorithm.
+GPROF report for each. 
+Analyze:  
+                        1. Which is faster and why?
+                        2. Measure and compare the execution time of different algorithms.
+                        3. Identify performance bottlenecks using GPROF.
+                        4. Analyze how problem size affects performance.
