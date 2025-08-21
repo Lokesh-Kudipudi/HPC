@@ -1,0 +1,2 @@
+1. Increase in injection_rate causes exponential increase in packet latency average in mesh88 topology
+2. Increase in injection_rate causes linear increase in packet latency average in torus88 topology
