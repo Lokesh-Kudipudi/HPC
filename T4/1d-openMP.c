@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <omp.h>
 
-void matrix_mul(int **A, int *X, int *Y, int n)
+void matrix_mul(long **A, long *X, long *Y, int n)
 {
-
 #pragma omp parallel
   {
     int threadID = omp_get_thread_num();
@@ -25,18 +24,17 @@ void matrix_mul(int **A, int *X, int *Y, int n)
 int main(int argc, char *argv[])
 {
   if (argc < 2) {
-    printf("Usage: %s <N>\n", argv[0]);
+    printf("Usage: %s <N-Matrix Size>\n", argv[0]);
     return 1;
   }
   int N = atoi(argv[1]);
-  int num_threads = atoi(argv[2]);
-  int **A = malloc(N * sizeof(int*));
-  int *X = malloc(N * sizeof(int));
-  int *Y = malloc(N * sizeof(int));
+  long **A = malloc(N * sizeof(long*));
+  long *X = malloc(N * sizeof(long));
+  long *Y = malloc(N * sizeof(long));
   int numberA = 1;
   int numberX = 1;
   for (int i = 0; i < N; i++) {
-    A[i] = malloc(N * sizeof(int));
+    A[i] = malloc(N * sizeof(double));
     for (int j = 0; j < N; j++) {
       A[i][j] = numberA;
       numberA++;
@@ -46,7 +44,7 @@ int main(int argc, char *argv[])
     Y[i] = 0;
   }
   printf("Matrix size: %dx%d\n", N, N);
-  int max_threads;
+  int max_threads; 
 #pragma omp parallel
   {
   #pragma omp master
@@ -55,12 +53,17 @@ int main(int argc, char *argv[])
       printf("Number of threads: %d\n", max_threads);
     }
   }
-#pragma omp num_threads(num_threads)
+  // Measure execution time using OpenMP wall clock
+  double start_time = omp_get_wtime();
   matrix_mul(A, X, Y, N);
+  double end_time = omp_get_wtime();
+  double elapsed = end_time - start_time;
+
   printf("Resultant Matrix Y:\n");
   for (int i = 0; i < N; i++)
-    printf("%d ", Y[i]);
+    printf("%ld ", Y[i]);
   printf("\n");
+  printf("Execution time: %.6f seconds\n", elapsed);
   for (int i = 0; i < N; i++) free(A[i]);
   free(A);
   free(X);
