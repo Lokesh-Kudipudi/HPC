@@ -1,0 +1,10 @@
+Execution time: 0.00000000 seconds for size 10
+Execution time: 0.00000000 seconds for size 50
+Execution time: 0.00000000 seconds for size 100
+Execution time: 0.00200009 seconds for size 500
+Execution time: 0.00500011 seconds for size 1000
+Execution time: 0.03099990 seconds for size 5000
+Execution time: 0.11500001 seconds for size 10000
+Execution time: 0.41900015 seconds for size 20000
+Execution time: 0.96299982 seconds for size 30000
+Execution time: 38.15100002 seconds for size 50000

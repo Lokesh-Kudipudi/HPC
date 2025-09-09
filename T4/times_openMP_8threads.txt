@@ -1,0 +1,10 @@
+Execution time: 0.00000000 seconds for Matrix Size 10
+Execution time: 0.00000000 seconds for Matrix Size 50
+Execution time: 0.00000000 seconds for Matrix Size 100
+Execution time: 0.00000000 seconds for Matrix Size 500
+Execution time: 0.00399995 seconds for size 1000
+Execution time: 0.03499985 seconds for size 5000
+Execution time: 0.10800004 seconds for size 10000
+Execution time: 0.41100001 seconds for size 20000
+Execution time: 0.96799994 seconds for size 30000
+Execution time: 32.55399990 seconds for size 50000

@@ -1,21 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <math.h>
 
 void matrix_mul(long **A, long *X, long *Y, int n)
 {
+  // Calculate grid dimensions for 2D partitioning
+  int num_threads = omp_get_max_threads();
+  int grid_size = (int)sqrt(num_threads);
+  int block_size = n / grid_size + (n % grid_size != 0);
+
 #pragma omp parallel
   {
-    int threadID = omp_get_thread_num();
-    int numThreads = omp_get_num_threads();
-    int offset = n / numThreads + (threadID < n % numThreads ? 1 : 0);
-    int start = threadID * (n / numThreads) + (threadID < n % numThreads ? threadID : n % numThreads);
-    int end = start + offset;
-    for (int i = start; i < end; i++)
+    int thread_id = omp_get_thread_num();
+    int row_block = thread_id / grid_size;
+    int col_block = thread_id % grid_size;
+
+    // Calculate block boundaries
+    int row_start = row_block * block_size;
+    int row_end = (row_block + 1) * block_size;
+    if (row_end > n)
+      row_end = n;
+
+    int col_start = col_block * block_size;
+    int col_end = (col_block + 1) * block_size;
+    if (col_end > n)
+      col_end = n;
+
+    // Process assigned block
+    for (int i = row_start; i < row_end; i++)
     {
-      Y[i] = 0;
-      for (int k = 0; k < n; k++)
-        Y[i] += A[i][k] * X[k];
+      long temp = 0;
+      for (int k = col_start; k < col_end; k++)
+      {
+        temp += A[i][k] * X[k];
+      }
+#pragma omp atomic
+      Y[i] += temp;
     }
   }
 }
